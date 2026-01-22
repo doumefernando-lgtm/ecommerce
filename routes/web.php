@@ -2,15 +2,20 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
+
+
 
 Route::get('/', function () {
-    return view('welcome');
+    return Auth::check() ? redirect()->route('admin.dashboard') : redirect()->route('login');
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('admin.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -29,4 +34,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('/admin/products', ProductController::class);
     Route::resource('/admin/categories', CategoryController::class);
+     Route::resource('/admin/orders', OrderController::class);
 });
+

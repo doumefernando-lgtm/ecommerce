@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -31,6 +33,8 @@
             <main>
                 {{ $slot }}
             </main>
+
+            @yield('content')
         </div>
     </body>
 </html>

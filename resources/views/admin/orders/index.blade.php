@@ -10,7 +10,7 @@
     <th>Total</th>
     <th>Status</th>
 </tr>
-
+<a href="{{ route('orders.show', $order) }}">Voir</a>
 @foreach($orders as $order)
 <tr>
     <td>#{{ $order->id }}</td>

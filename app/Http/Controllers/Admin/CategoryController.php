@@ -23,6 +23,11 @@ class CategoryController extends Controller
         return redirect()->route('categories.index');
     }
 
+    public function show(Category $category) 
+        {
+            return view('admin.categories.show', compact('category'));
+        }
+
     public function edit(Category $category) {
         return view('admin.categories.edit', compact('category'));
     }
