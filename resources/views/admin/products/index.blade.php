@@ -2,8 +2,14 @@
 
 @section('content')
 <h2>Produits</h2>
+@if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
 
-<a href="{{ route('products.create') }}">➕ Ajouter</a>
+
+<a href="{{ route('products.create') }}"> Ajouter</a>
 
 <table class="table table-bordered">
     <tr>
@@ -23,7 +29,8 @@
             <td>{{ $product->price }}</td>
             <td>{{ $product->stock }}</td>
             <td>{{ $product->description }}</td>
-            <td>@if ($product->image_url)
+            <td>
+                @if ($product->image_url)
         <img src="{{ asset('storage/'.$product->image_url) }}"
              alt="{{ $product->name }}"
              width="60">
