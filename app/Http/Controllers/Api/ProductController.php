@@ -26,14 +26,23 @@ class ProductController extends Controller
     // Créer produit (admin)
     public function store(Request $request)
     {
-        $request->validate([
-            'category_id' => 'required|exists:categories,id',
-            'name' => 'required|string',
-            'price' => 'required|numeric',
-            'stock' => 'required|integer'
-        ]);
+        $imagePath = null;
 
-        $product = Product::create($request->all());
+        if($request->hasFile('image')){
+            $imagePath = $request->file('image')->store('products', 'public');
+        }
+
+
+        $product = Product::create(
+            [
+                'category_id' => $request->category_id,
+                'name' => $request->name,
+                'description' => $request->description ?? null,
+                'price' => $request->price,
+                'stock' => $request->stock ?? 0,
+                'image_url' => $imagePath,
+            ]
+        );
 
         return response()->json($product, 201);
     }

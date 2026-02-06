@@ -1,9 +1,18 @@
 @extends('admin.layout')
 
 @section('content')
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
     <form method="POST" action="{{ route('products.store') }}"  enctype="multipart/form-data">
     @csrf
-    <select name="category_id" required>
+    <select name="category_id" >
             <option value="">-- Sélectionner une catégorie --</option>
             @foreach ($categories as $category)
                 <option value="{{ $category->id }}">
@@ -17,7 +26,7 @@
     <textarea name="description"></textarea>
     <input type="file" name="image">
 
-    <button>Créer</button>
+    <button type="submit">Créer</button>
     </form>
 @endsection
 
