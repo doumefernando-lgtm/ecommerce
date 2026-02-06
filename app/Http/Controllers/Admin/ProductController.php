@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Product;
 use App\Models\Category;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,16 +19,12 @@ class ProductController extends Controller
         $categories = Category::all();
         return view('admin.products.create', compact('categories'));
     }
-        public function store(Request $request)
+      
+
+        public function store(ProductRequest $request)
         {
-        $data = $request->validate([
-            'category_id' => 'required|exists:categories,id',
-            'name' => 'required|string',
-            'price' => 'required|numeric',
-            'stock' => 'required|integer',
-            'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048'
-        ]);
+        $data = $request->validated();
+        
 
         if ($request->hasFile('image')) {
             $data['image_url'] = $request->file('image')->store('products', 'public');
@@ -38,6 +35,8 @@ class ProductController extends Controller
         return redirect()->route('products.index')
             ->with('success', 'Produit créé avec succès');
     }
+
+      
     public function show(Product $product) 
         {
             return view('admin.products.show', compact('product'));
